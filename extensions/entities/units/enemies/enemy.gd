@@ -4,7 +4,7 @@ func _dmgmeter_get_charm_enemy_effect_behavior_from_hitbox(hitbox: Object) -> Ch
 	# Hitboxes are children of Units and we can reference the parent with 'from'
 	var unit = hitbox.from
 	# We only care to check for effect behavior if it is an enemy
-	if unit is Enemy:
+	if is_instance_valid(unit) and unit is Enemy:
 		var effect_behaviors = unit.effect_behaviors.get_children()
 		for behavior in effect_behaviors:
 			if behavior is CharmEnemyEffectBehavior:
@@ -16,6 +16,11 @@ func take_damage(value: int, args: TakeDamageArgs)->Array:
 	# Not everything that does damage has a hitbox
 	# For example, the Lucky character innate ability does damage without a hitbox
 	if args.hitbox:
+		# Hitbox is triggered but from entity 
+		# Is this significant enough to worry about?
+		if not is_instance_valid(args.hitbox):
+			print("Damage dropped: ", args.hitbox.damage)
+			
 		var charm_enemy_effect_behavior = _dmgmeter_get_charm_enemy_effect_behavior_from_hitbox(args.hitbox)
 		# Use get() because above function could return Nil
 		if charm_enemy_effect_behavior and charm_enemy_effect_behavior.get("charmed"):

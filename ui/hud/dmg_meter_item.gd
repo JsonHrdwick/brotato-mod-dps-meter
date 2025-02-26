@@ -55,6 +55,7 @@ func set_total_damage_element(player_index: int) -> void:
 	update_background_color()
 
 func set_total_damage(amount: int) -> void:
-	
-	dmg_label.text = str(amount)
+
+	dmg_label.text = Text.get_formatted_number(amount)
+
 
