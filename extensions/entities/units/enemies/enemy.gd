@@ -16,7 +16,7 @@ func take_damage(value: int, args: TakeDamageArgs)->Array:
 	# Not everything that does damage has a hitbox
 	# For example, the Lucky character innate ability does damage without a hitbox
 	if args.hitbox:
-		# Hitbox is triggered but from entity 
+		# Hitbox is triggered but from entity is dead
 		# Is this significant enough to worry about?
 		if not is_instance_valid(args.hitbox):
 			print("Damage dropped: ", args.hitbox.damage)
